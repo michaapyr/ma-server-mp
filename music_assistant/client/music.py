@@ -531,5 +531,5 @@ class Music:
         item: MediaItemType | ItemMapping | QueueItem,
         type: ImageType = ImageType.THUMB,  # noqa: A002
     ) -> MediaItemImage | None:
-        """Get MediaItemImage for MediaItem, ItemMapping"""
+        """Get MediaItemImage for MediaItem, ItemMapping."""
         return None
