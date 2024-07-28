@@ -143,7 +143,7 @@ class MusicAssistantClient:
                 f"&w=${size}&h=${size}&fit=cover&a=attention"
             )
         # return imageproxy url for images that need to be resolved
-        # the original path is double encoded
+        # the original path is double encoded 2
         encoded_url = urllib.parse.quote(urllib.parse.quote(image.path))
         return (
             f"{self.server_info.base_url}/imageproxy?path={encoded_url}"
@@ -157,12 +157,6 @@ class MusicAssistantClient:
         size: int = 0,
     ) -> str | None:
         """Get image URL for MediaItem, QueueItem or ItemMapping."""
-        # handle queueitem with media_item attribute
-        if media_item := getattr(item, "media_item", None):
-            if img := self.music.get_media_item_image(media_item, type):
-                return self.get_image_url(img, size)
-        if img := self.music.get_media_item_image(item, type):
-            return self.get_image_url(img, size)
         return None
 
     def subscribe(
