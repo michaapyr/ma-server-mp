@@ -38,26 +38,6 @@ async def get_image_thumb(
     """Get (optimized) PNG thumbnail from image url."""
     raise FileNotFoundError(f"Image not found: {path_or_url}")
 
-    if not size and image_format.encode() in img_data:
-        return img_data
-
-    def _create_image():
-        data = BytesIO()
-        try:
-            img = Image.open(BytesIO(img_data))
-        except UnidentifiedImageError:
-            raise FileNotFoundError(f"Invalid image: {path_or_url}")
-        if size:
-            img.thumbnail((size, size), Image.LANCZOS)  # pylint: disable=no-member
-
-        mode = "RGBA" if image_format == "PNG" else "RGB"
-        img.convert(mode).save(data, image_format, optimize=True)
-        return data.getvalue()
-
-    image_format = image_format.upper()
-    return await asyncio.to_thread(_create_image)
-
-
 async def create_collage(
     mass: MusicAssistant, images: Iterable[MediaItemImage], dimensions: tuple[int] = (1500, 1500)
 ) -> bytes:

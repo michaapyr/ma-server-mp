@@ -326,7 +326,7 @@ class MetaDataController(CoreController):
         raise ProviderUnavailableError
 
     async def handle_imageproxy(self, request: web.Request) -> web.Response:
-        """Handle request for image proxy."""
+        """Handle request for image proxy"""
         return web.Response(status=404)
 
     async def create_collage_image(
