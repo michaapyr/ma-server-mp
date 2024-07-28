@@ -323,17 +323,10 @@ class MetaDataController(CoreController):
         image_format: str = "png",
     ) -> bytes | str:
         """Get/create thumbnail image for path (image url or local path)."""
-        if not self.mass.get_provider(provider):
-            raise ProviderUnavailableError
-        thumbnail = await get_image_thumb(
-            self.mass, path, size=size, provider=provider, image_format=image_format
-        )
-        if base64:
-            enc_image = b64encode(thumbnail).decode()
-            thumbnail = f"data:image/{image_format};base64,{enc_image}"
-        return thumbnail
+        raise ProviderUnavailableError
 
     async def handle_imageproxy(self, request: web.Request) -> web.Response:
+        """Handle request for image proxy."""
         return web.Response(status=404)
 
     async def create_collage_image(
