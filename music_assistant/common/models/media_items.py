@@ -367,10 +367,7 @@ class MediaItem(_MediaItemBase):
     @property
     def image(self) -> MediaItemImage | None:
         """Return (first/random) image/thumb from metadata (if any)."""
-        if self.metadata is None or self.metadata.images is None:
-            return None
-        return next((x for x in self.metadata.images if x.type == ImageType.THUMB), None)
-
+        return None
 
 @dataclass(kw_only=True)
 class ItemMapping(_MediaItemBase):
@@ -388,12 +385,6 @@ class ItemMapping(_MediaItemBase):
         if isinstance(item, ItemMapping):
             return item
         thumb_image = None
-        if item.metadata and item.metadata.images:
-            for img in item.metadata.images:
-                if img.type != ImageType.THUMB:
-                    continue
-                thumb_image = img
-                break
         return cls.from_dict(
             {**item.to_dict(), "image": thumb_image.to_dict() if thumb_image else None}
         )
